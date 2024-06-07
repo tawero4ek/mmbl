@@ -63,7 +63,7 @@ def click_color_areas(window_title, target_colors_hex):
 
     with mss.mss() as sct:
         running = False
-        play_again_button_coords = (100, 500)
+        play_again_button_coords = (100, 600)
         game_timer = None
         backtick_timer = None
 
