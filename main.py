@@ -8,6 +8,7 @@ import win32api
 import win32con
 import threading
 
+
 class Logger:
     def __init__(self, prefix=None):
         self.prefix = prefix
@@ -18,21 +19,22 @@ class Logger:
         else:
             print(data)
 
+
 logger = Logger("[Script]")
-game_running = True  
+game_running = True
+
 
 def stop_game():
     global game_running
     game_running = False
 
-def click_play_again_button(x, y):
-    click_at(x, y)
 
 def press_backtick():
-    time.sleep(0.1)  
+    time.sleep(0.1)
     keyboard.press('`')
     keyboard.release('`')
     logger.log('Backtick key pressed')
+
 
 def hex_to_hsv(hex_color):
     hex_color = hex_color.lstrip('#')
@@ -41,10 +43,12 @@ def hex_to_hsv(hex_color):
     hsv = cv2.cvtColor(rgb_normalized, cv2.COLOR_RGB2HSV)
     return hsv[0][0]
 
+
 def click_at(x, y):
     win32api.SetCursorPos((x, y))
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, x, y, 0, 0)
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, x, y, 0, 0)
+
 
 def click_color_areas(window_title, target_colors_hex):
     windows = gw.getWindowsWithTitle(window_title)
@@ -59,7 +63,7 @@ def click_color_areas(window_title, target_colors_hex):
 
     with mss.mss() as sct:
         running = False
-        play_again_button_coords = (170, 600)  
+        play_again_button_coords = (100, 500)
         game_timer = None
         backtick_timer = None
 
@@ -74,6 +78,11 @@ def click_color_areas(window_title, target_colors_hex):
                 if backtick_timer is not None:
                     backtick_timer.cancel()
                     backtick_timer = None
+
+        def click_play_again_button(x, y):
+            MyX = window.left + x
+            MyY = window.top + y
+            click_at(MyX, MyY)
 
         def game_over():
             nonlocal running, game_timer
@@ -105,10 +114,9 @@ def click_color_areas(window_title, target_colors_hex):
             backtick_timer.start()
 
         try:
-            keyboard.add_hotkey('`', toggle_script)  
+            keyboard.add_hotkey('`', toggle_script)
         except ValueError as e:
             logger.log(f"An error occurred while adding the hotkey: {e}")
-
 
         while True:
             if running:
@@ -149,8 +157,12 @@ def click_color_areas(window_title, target_colors_hex):
                         click_at(cX, cY + click_offset_y)
                         logger.log(f'Clicked: {cX} {cY + click_offset_y}')
             else:
-                 time.sleep(1)
+                time.sleep(1)
+
+
 if __name__ == "__main__":
-    logger.log('After starting the mini game, press the "`" key on the keyboard, the keyboard layout should be EN, after the mini game ends, press the "`" key again to disable the script. Repeat the actions as needed.')
+    logger.log(
+        'После запуска мини-игры нажмите клавишу "``" на клавиатуре, раскладка клавиатуры должна быть EN,'
+        '\n после окончания мини-игры нажмите клавишу "`" еще раз, чтобы отключить скрипт')
     target_colors_hex = ["#c5d900", "#7eff22"]
-    click_color_areas("TelegramDesktop", target_colors_hex) 
+    click_color_areas("TelegramDesktop", target_colors_hex)
