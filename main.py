@@ -63,7 +63,7 @@ def click_color_areas(window_title, target_colors_hex):
 
     with mss.mss() as sct:
         running = False
-        play_again_button_coords = (100, 600)
+        play_again_button_coords = (190, 600) # изменяется ли окно телеги?
         game_timer = None
         backtick_timer = None
 
@@ -104,14 +104,6 @@ def click_color_areas(window_title, target_colors_hex):
             game_timer = threading.Timer(40.0, game_over)
             logger.log('Game timer reset')
             game_timer.start()
-
-        def reset_backtick_timer():
-            nonlocal backtick_timer
-            if backtick_timer is not None:
-                backtick_timer.cancel()
-            backtick_timer = threading.Timer(40.0, press_backtick)
-            logger.log('Backtick timer reset')
-            backtick_timer.start()
 
         try:
             keyboard.add_hotkey('`', toggle_script)
