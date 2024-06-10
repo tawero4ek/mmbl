@@ -47,7 +47,7 @@ def click_at(x, y):
 def click_color_areas(window_title, target_colors_hex):
     windows = gw.getWindowsWithTitle(window_title)
     if not windows:
-        logger.log(f"No window found with title: {window_title}")
+        logger.log(f"Не найдено окно : {window_title}")
         return
 
     window = windows[0]
@@ -82,7 +82,7 @@ def click_color_areas(window_title, target_colors_hex):
             nonlocal running, game_timer
             running = False
             game_timer = None
-            logger.log('Game over detected, clicking play again button')
+            logger.log('Окончание игры, нажмите кнопку воспроизвести еще раз')
             click_play_again_button(*play_again_button_coords)
             threading.Thread(target=press_and_restart).start()
 
@@ -96,7 +96,7 @@ def click_color_areas(window_title, target_colors_hex):
             if game_timer is not None:
                 game_timer.cancel()
             game_timer = threading.Timer(40.0, game_over)
-            logger.log('Game timer reset')
+            logger.log('Сброс игрового таймера')
             game_timer.start()
 
         while True:
@@ -136,6 +136,6 @@ def click_color_areas(window_title, target_colors_hex):
 
                         click_offset_y = 0
                         click_at(cX, cY + click_offset_y)
-                        logger.log(f'Clicked: {cX} {cY + click_offset_y}')
+                        logger.log(f'Нажата: {cX} {cY + click_offset_y}')
             else:
                 time.sleep(1)
