@@ -4,6 +4,7 @@ import threading
 from core import click_color_areas
 from gui import create_and_run_gui
 
+
 if __name__ == "__main__":
     target_colors_hex = ["#c5d900", "#7eff22"]
 
