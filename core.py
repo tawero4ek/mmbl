@@ -100,7 +100,7 @@ def click_random_areas(window_title):
 
                 # Клик в случайные координаты в пределах окна, с учётом отступов сверху и снизу
                 x = np.random.randint(monitor["left"], monitor["left"] + monitor["width"])
-                y = np.random.randint(monitor["top"], monitor["top"] + monitor["height"])
+                y = np.random.randint(monitor["top"], min(monitor["top"] + monitor["height"], 690))
 
                 click_at(x, y)
 
